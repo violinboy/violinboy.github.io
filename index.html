@@ -1,1 +1,124 @@
-Hello World
+<!-- Create the canvas -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Title on the tab in the web browser -->
+    <title>big men</title>
+
+    <style>
+        /* defines the border and background color for the canvas we create */
+        canvas {
+            border: 6.9px solid #0000FF;
+            background-color: #89CFF0;
+        }
+    </style>
+</head>
+
+<!-- this will call the startGame() function when the body loads -->
+<body onload="startGame()">
+    <script>
+
+        //Here we will initialize the start start of the game
+        var myGamePiece;
+
+        function startGame() {
+            myGamePiece = new component(2000, 2000, "edp.png", 10 ,120 ,"image");
+            myGameArea.start();
+        }
+
+          function component(width, height, color, x, y, type){
+            this.width = width;
+            this.height = height;
+            this.color = color;
+            this.x = x;
+            this.y = y;
+            this.img = document.createElement('img');
+            this.img.src = color;
+            this.img.alt = "could not display";
+
+            this.update = function() {
+              ctx = myGameArea.context;
+              ctx.drawImage(this. img, this.x, this.y, this.width, this.height);
+            }
+                this.crashWith = function (otherobj) {
+                    var myleft = this.x;
+                    var myright = this.x + (this.width);
+                    var mytop = this.y;
+                    var bottom = this.y; + (this.height);
+                    var otherleft = otherobj.x;
+                    var otherright = otherobj.x + (otherobj.width);
+                    var othertop = otherobj.y;
+                    var otherbottom = otherobj.y + (otherobj.height);
+                    var crash = true;
+                    if((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft < otherright)){
+                      crash = false;
+                    }
+                    return crash;
+                }
+
+
+
+          }
+
+        //Defines the game area
+        var myGameArea = {
+
+                //Creates the canvas element
+
+                canvas: document.createElement("canvas"),
+                start: function () {
+                    this.canvas.width = 1490;
+                    this.canvas.height = 800;
+                    this.context = this.canvas.getContext("2d");
+                    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+                    this.frameNo = 0;
+
+                    //This will call updateGameArea every 20 ms
+                    this.interval = setInterval(updateGameArea, 1);
+                },
+                clear: function () {
+                    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                }
+            }
+        //Dont worry about this so much
+        function everyinterval(n) {
+            if ((myGameArea.frameNo / n) % 1 == 0) { return true; }
+            return false;
+        }
+
+        //In this function you need to define what is going to change every frame
+        function updateGameArea() {
+          myGameArea.clear()
+          myGamePiece.update();
+
+        }
+        document.onkeydown = checkKey;
+        function checkKey(e) {
+            if (e.keyCode == '37') {
+              myGamePiece.x -= 25;
+            }
+            else if (e.keyCode == '38') {
+              myGamePiece.y -= 25;
+            }
+            else if  (e.keyCode == '39') {
+              myGamePiece.x += 25;
+            }
+            else if (e.keyCode == '40') {
+              myGamePiece.y += 25;
+                    }
+                  }
+
+
+    </script>
+
+    <h3>big men</h3>
+
+
+
+</body>
+
+</html>
